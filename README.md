@@ -1,11 +1,11 @@
 # PPTX Translator
 usage: 
 ```
-python3 pptx-translator 'destination-language' 'translation-mode' 'source-file' 'destination-file'
+python3 pptx-translator.py 'destination-language' 'translation-mode' 'source-file' 'destination-file'
 ```
 example: 
 ```
-python3 pptx-translator ar overwrite day1.pptx day1-arabic.pptx
+python3 pptx-translator.py ar overwrite day1.pptx day1-arabic.pptx
 ```
 this will translate the file called ``day1.pptx`` into arabic and save it as ``day1-arabic.pptx``.
 
