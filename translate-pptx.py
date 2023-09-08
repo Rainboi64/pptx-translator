@@ -22,7 +22,7 @@ for slide in prs.slides:
     title = shapes[0].text
     if sys.argv[2] == 'merge':
             shapes[0].text = title + '\n\n' + translator.translate(title, dest=dest).text
-    elif sys.argv[2] == 'overwritte': 
+    elif sys.argv[2] == 'overwrite': 
             shapes[0].text = translator.translate(title, dest=dest).text
     else:
             print('invalid command', sys.argv[1])
@@ -35,7 +35,7 @@ for slide in prs.slides:
 
             if sys.argv[2] == 'merge':
                 shape.text = content + '\n' + translation
-            elif sys.argv[2] == 'overwritte': 
+            elif sys.argv[2] == 'overwrite': 
                 shape.text = translation
             else:
                 print('invalid command', sys.argv[2])
