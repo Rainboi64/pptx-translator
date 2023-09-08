@@ -2,10 +2,10 @@ from pptx import Presentation
 import sys
 from googletrans import Translator
 
-prs = Presentation(sys.argv[2])
+prs = Presentation(sys.argv[3])
 translator = Translator(service_urls=['translate.googleapis.com'])
 
-dest = 'ar'
+dest = sys.argv[1]
 i = 0
 
 for slide in prs.slides:
@@ -20,9 +20,9 @@ for slide in prs.slides:
     
     # translate title
     title = shapes[0].text
-    if sys.argv[1] == 'merge':
+    if sys.argv[2] == 'merge':
             shapes[0].text = title + '\n\n' + translator.translate(title, dest=dest).text
-    elif sys.argv[1] == 'overwritte': 
+    elif sys.argv[2] == 'overwritte': 
             shapes[0].text = translator.translate(title, dest=dest).text
     else:
             print('invalid command', sys.argv[1])
@@ -33,15 +33,15 @@ for slide in prs.slides:
                 content = shape.text
                 translation = translator.translate(content, dest=dest).text
 
-            if sys.argv[1] == 'merge':
+            if sys.argv[2] == 'merge':
                 shape.text = content + '\n' + translation
-            elif sys.argv[1] == 'overwritte': 
+            elif sys.argv[2] == 'overwritte': 
                 shape.text = translation
             else:
-                print('invalid command', sys.argv[1])
+                print('invalid command', sys.argv[2])
 
 
     print('a slide was translated', i, '/', len(prs.slides))
 
-prs.save(sys.argv[3])
+prs.save(sys.argv[4])
 print('done')
