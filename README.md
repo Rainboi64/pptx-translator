@@ -1,8 +1,13 @@
 # PPTX Translator
 usage: 
 ```
-python3 pptx-translator 'language-shorthand-notation' 'translation-mode' 'source-file' 'destination-file'
+python3 pptx-translator 'destination-language' 'translation-mode' 'source-file' 'destination-file'
 ```
+example: 
+```
+python3 pptx-translator ar overwrite day1.pptx day1-arabic.pptx
+```
+this will translate the file called ``day1.pptx`` into arabic and save it as ``day1-arabic.pptx``.
 
 note: this will only translate text blocks and won't translate text in SmartArt.
 
@@ -10,7 +15,6 @@ translation mode is either ``overwrite`` to create a new file and replace the da
 you will probably be using ``overwrite``
 
 uses the googletrans package to translate, in order to install run ``pip3 install googletrans``.
-
 The Google Translate API supports a variety of languages. To list all the supported languages, run the following script:
 ```
 import googletrans
