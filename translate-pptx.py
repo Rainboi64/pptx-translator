@@ -8,6 +8,11 @@ translator = Translator(service_urls=['translate.googleapis.com'])
 dest = sys.argv[1]
 i = 0
 
+mode = sys.argv[2]
+if not (mode == 'merge' or mode == 'overwrite'):
+    print('invalid mode please use merge or overwrite')
+    quit()
+
 for slide in prs.slides:
     i = i + 1
     shapes = []
@@ -18,14 +23,21 @@ for slide in prs.slides:
             if(shape.text != ''):
                 shapes.append(shape)
     
+    # Translate notes
+    if slide.has_notes_slide:
+        notes = slide.notes_slide.notes_text_frame
+        if mode == 'merge':
+            notes.text = notes.text  + '\n' + translator.translate(notes.text, dest=dest).text
+        elif mode == 'overwrite': 
+            notes.text = translator.translate(notes.text, dest=dest).text
+    
     # translate title
     title = shapes[0].text
-    if sys.argv[2] == 'merge':
+    if mode == 'merge':
             shapes[0].text = title + '\n\n' + translator.translate(title, dest=dest).text
-    elif sys.argv[2] == 'overwrite': 
+    elif mode == 'overwrite': 
             shapes[0].text = translator.translate(title, dest=dest).text
-    else:
-            print('invalid command', sys.argv[1])
+
 
     # translate content
     for shape in shapes[1:]:
@@ -33,12 +45,10 @@ for slide in prs.slides:
                 content = shape.text
                 translation = translator.translate(content, dest=dest).text
 
-            if sys.argv[2] == 'merge':
+            if mode == 'merge':
                 shape.text = content + '\n' + translation
-            elif sys.argv[2] == 'overwrite': 
+            elif mode == 'overwrite': 
                 shape.text = translation
-            else:
-                print('invalid command', sys.argv[2])
 
 
     print('a slide was translated', i, '/', len(prs.slides))
